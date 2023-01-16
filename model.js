@@ -1,41 +1,49 @@
-let booksDb = require("./db.js");
+const mongoose = require("mongoose");
 
-class BookModel {
-  constructor({ title, author, description }) {
-    this.title = title;
-    this.author = author;
-    this.description = description;
-  }
+const BookSchema = mongoose.Schema({
+  title: String,
+  author: String,
+  description: String,
+});
 
-  save() {
-    booksDb.push(this);
-    return this;
-  }
+const BookModel = mongoose.model("Book", BookSchema);
 
-  static all() {
-    return booksDb;
-  }
+// class BookModel {
+//   constructor({ title, author, description }) {
+//     this.title = title;
+//     this.author = author;
+//     this.description = description;
+//   }
 
-  static update(updatedInfo = {}) {
-    booksDb = booksDb.map((book) => {
-      if (book.title === updatedInfo.title) {
-        return { ...book, ...updatedInfo };
-      }
-      return book;
-    });
-  }
+//   save() {
+//     booksDb.push(this);
+//     return this;
+//   }
 
-  static delete({ title }) {
-    let deletedBook = null;
-    booksDb = booksDb.filter((book) => {
-      if (book.title !== title) {
-        return true;
-      }
-      deletedBook = book;
-      return false;
-    });
-    return deletedBook;
-  }
-}
+//   static all() {
+//     return booksDb;
+//   }
+
+//   static update(updatedInfo = {}) {
+//     booksDb = booksDb.map((book) => {
+//       if (book.title === updatedInfo.title) {
+//         return { ...book, ...updatedInfo };
+//       }
+//       return book;
+//     });
+//   }
+
+//   static delete({ title }) {
+//     let deletedBook = null;
+//     booksDb = booksDb.filter((book) => {
+//       if (book.title !== title) {
+//         return true;
+//       }
+//       deletedBook = book;
+//       return false;
+//     });
+//     return deletedBook;
+//   }
+// }
 
 module.exports = BookModel;
